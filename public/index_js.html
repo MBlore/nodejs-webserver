@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sample Form</title>
+</head>
+<body>
+    <h2>Submit your details:</h2>
+	
+	<form id="frm" method="post" action="/">
+	
+		<!-- These input fields will be posted to the server when the form is submitted -->
+		<input type="text" name="name" /><br />
+		<input type="text" name="email" /><br />
+		
+		<!--
+		This buttom will tell the browser to take all the "input" fields in the <form> block and post them
+		to the URL set on the form action attribute.
+		-->
+        <button id="save">Save</button>
+	</form>
+	
+	<script type="text/javascript">
+		(function() {
+			document.querySelector("#frm").addEventListener("submit", function(e) {
+				e.preventDefault();    // Stop page refresh.
+				
+				var form = document.querySelector("#frm");
+				var data = new URLSearchParams(new FormData(form))
+				
+				fetch("/", {
+					method: 'post',
+					body: data
+				});
+				
+				alert("Sent!");
+			});
+		})();
+	</script>
+</body>
+</html>
