@@ -32,6 +32,9 @@
 			$("#save").click(function(e) {
 				e.preventDefault();	// Stops the page from refreshing.
 				
+				var hello = "world";
+				
+				
 				var serverData = $("#frm").serializeArray();
 				$.post("/", serverData);
 				

@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const fs = require('fs');
+const MongoClient = require('mongodb').MongoClient;
 
 const app = express()
 const port = 3000
@@ -20,6 +21,16 @@ app.post('/', function (req, res) {
 	// Lets write the data in to a text file for fun.
 	fs.appendFile('details.txt', 'name: ' + req.body.name, function (err) {
 	  console.log('Saved!');
+	});
+	
+	// Save to mongodb!
+	// Connect to mongo.
+	MongoClient.connect('mongodb://localhost:27017/', function(err, db) {
+		var dbo = db.db("contacts");
+		dbo.collection("contacts").insertOne({ name: req.body.name, email: req.body.email }, function(err, res) {
+			console.log("Inserted " + res.insertedCount + " document.");
+			db.close();
+		});
 	});
 })
 
