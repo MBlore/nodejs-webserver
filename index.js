@@ -12,9 +12,12 @@ app.use(bodyParser.urlencoded({     // to support form posts
   extended: true
 }));
 
+app.set("view options", {layout: false});
+app.engine('html', require('ejs').renderFile);
+
 // This registers a function to be called if we receive a form post message to the root URL of the server.
 app.post('/', function (req, res) {
-	res.send('Your name is ' + req.body.name + ' and your email is ' + req.body.email)
+	res.render('done.html');
 	
 	// You can save the name and email in a database here.
 	
